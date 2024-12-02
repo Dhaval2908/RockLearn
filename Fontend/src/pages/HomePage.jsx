@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import './home.css';
-import { FaGithub, FaHeart, FaDownload } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
+import { FaGithub, FaHeart, FaDownload } from 'react-icons/fa';
+
 
 const HomePage = () => {
     const [repoDetails, setRepoDetails] = useState([]);
@@ -11,9 +12,13 @@ const HomePage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const { isAuthenticated, user } = useAuth();
-    const getToken = () => {
-        return localStorage.getItem('TOKEN');
-    };
+
+    // Pagination states
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6; // Number of items per page
+    const totalPages = Math.ceil(repoDetails.length / itemsPerPage);
+
+    const getToken = () => localStorage.getItem('TOKEN');
 
     const fetchAllRepos = async () => {
         setLoading(true);
@@ -39,6 +44,10 @@ const HomePage = () => {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        fetchAllRepos();
+    }, []);
 
     const markRepoVisited = async (repoId) => {
         try {
@@ -138,14 +147,24 @@ const HomePage = () => {
             ? words[0][0].toUpperCase() + words[1][0].toUpperCase()
             : repoName[0].toUpperCase();
     };
+    
+
+    // Get paginated data
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentRepos = repoDetails.slice(indexOfFirstItem, indexOfLastItem);
+
+    const handlePageChange = (pageNumber) => {
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+            setCurrentPage(pageNumber);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gray-100 text-gray-900">
             <Header />
             <div className="content-area w-11/12 md:w-4/5 p-6 mx-auto">
-                <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center text-red-500">
-                    Repositories
-                </h1>
+                <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center text-red-500">Repositories</h1>
 
                 <div className="mb-6 flex justify-center">
                     <input
@@ -159,9 +178,8 @@ const HomePage = () => {
 
                 {error && <div className="text-red-500 text-center mb-4">{error}</div>}
                 {loading && <div className="text-center text-lg">Loading...</div>}
-
                 <div className="repo-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                    {repoDetails.map((repo) => (
+                    {currentRepos.map((repo) => (
                         <div
                             key={repo._id}
                             className="repo-card p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transform transition-transform hover:scale-105"
@@ -181,9 +199,7 @@ const HomePage = () => {
                             </Link>
                             <div className="mt-4 flex justify-between items-center">
                                 <button
-                                    className={`flex items-center text-sm ${
-                                        repo.likedByUser ? 'text-red-500' : 'text-gray-500'
-                                    }`}
+                                    className={`flex items-center text-sm ${repo.likedByUser ? 'text-red-500' : 'text-gray-500'}`}
                                     onClick={() => handleLike(repo._id)}
                                 >
                                     <FaHeart className="mr-2" />
@@ -207,6 +223,35 @@ const HomePage = () => {
                             </div>
                         </div>
                     ))}
+                </div>
+
+                {/* Pagination Controls */}
+                <div className="flex justify-center items-center mt-6 space-x-2">
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg disabled:opacity-50"
+                    >
+                        Previous
+                    </button>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index + 1}
+                            onClick={() => handlePageChange(index + 1)}
+                            className={`px-4 py-2 rounded-lg ${
+                                currentPage === index + 1 ? 'bg-red-500 text-white' : 'bg-gray-300 text-gray-700'
+                            }`}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg disabled:opacity-50"
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
         </div>

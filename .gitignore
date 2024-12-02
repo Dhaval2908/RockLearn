@@ -7,3 +7,15 @@ uploads/
 *.env
 *.local
 *.log
+
+# Ignore resume and CV files
+Backend/Chaitanya_Panchal-Resume.pdf
+Backend/Chaitanya_Panchal@CV.pdf
+Backend/Chaitanya_Panchal@Resume.pdf
+Backend/Chaitanya_Panchal_CV.pdf
+
+# Ignore image and video files
+Backend/img1.png
+Backend/img3.png
+Backend/img4.png
+Backend/sample video.mp4
